@@ -2,8 +2,7 @@ package com.Students.detail.entity;
 
 import java.util.HashSet;
 import java.util.Set;
-
-//import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 
@@ -68,8 +67,7 @@ public class Course {
 	}
 
 	
-	//@JsonIgnore
-	//this shud be in either Course or Student class, not both
+	@JsonIgnore
 	public Set<Student> getStudents() {
 	    return students;
 	}

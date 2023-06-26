@@ -1,4 +1,4 @@
-package com.Students.detail.other;
+package com.Students.detail.request;
 
 public class CourseStudentRequest {
     private Integer studentId;

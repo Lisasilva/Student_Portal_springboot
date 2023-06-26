@@ -9,7 +9,7 @@ import com.Students.detail.entity.Student;
 @Service
 public class StudentService {
 	
-	@Autowired
+	@Autowired         //implicit dependency obj
 	StudentRepository studRepository;  //provides methods to interact with the DB using JPA ig
 	
 	public List<Student> getAll(){    //GET
@@ -40,7 +40,7 @@ public class StudentService {
 	
 	
 	public String delete(int studNo) {
-		if(!studRepository.existsById(studNo)){        // to check if the ID enetered doesnt exist
+		if(!studRepository.existsById(studNo)){        // to check if the ID entered doesnt exist
 			throw new RuntimeException("Record doesn't exist");
 		}
 		studRepository.deleteById(studNo);

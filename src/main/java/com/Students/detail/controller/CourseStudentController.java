@@ -1,6 +1,6 @@
 package com.Students.detail.controller;
 
-import com.Students.detail.other.CourseStudentRequest;
+import com.Students.detail.request.CourseStudentRequest;
 import com.Students.detail.service.CourseStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

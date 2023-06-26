@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.HashSet;
 import org.springframework.data.relational.core.mapping.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 
@@ -76,7 +76,8 @@ public class Student {
 	
 	
 	
-	@JsonIgnore
+	//@JsonIgnore
+	//this shud be in either Course or Student class, not both
 	public Set<Course> getSelectedCourses() {
 	    return selectedCourses;
 	}
