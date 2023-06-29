@@ -1,3 +1,4 @@
+
 package com.Students.detail.service;
 
 import com.Students.detail.entity.Student;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 //import java.util.Optional;
 
 @Service
-public class MarksService {
+public class MarksService implements BaseMarksService {
 	
     @Autowired
     private StudentRepository studentRepository;
@@ -30,6 +31,7 @@ public class MarksService {
     
    
     //ADD A NEW RECORD
+    @Override
     public Marks add(int studentId, int courseId, int marks) {
         
     	//checks if the student_id - course_id combo exists in student_courses table
@@ -58,6 +60,7 @@ public class MarksService {
 
   
     //DISPLAY ALL THE RECORDS IN MARKS TABLE
+    @Override
     public List<StudentCourseMarksDTO> getAll() {
         List<Marks> marks = marksRepository.findAll();
 
@@ -77,6 +80,7 @@ public class MarksService {
    
 
     //DISPLAY THE RECORD WITH THE GIVEN ID
+    @Override
     public StudentCourseMarksDTO getById(int marksId) {
     	
     	Marks marks = marksRepository.findById(marksId).orElseThrow(() -> new RuntimeException("No record found for this marksId"));
@@ -93,6 +97,7 @@ public class MarksService {
    
     
     //UPDATE THE MARKS OF A RECORD WITH GIVEN STUDENT ID AND COURSE ID
+    @Override
     public StudentCourseMarksDTO update( int studentId, int courseId, int marks) {
     	
         //checks if the student_id - course_id combo exists in student_courses table
@@ -127,11 +132,13 @@ public class MarksService {
 
 
     //DELETE A RECORD FROM MARKS
+    @Override
     public void delete(int marksId) {
         marksRepository.deleteById(marksId);
     }
     
-    //FETCH MARK OF A STUDENT FOR A GIVEN COURSE 
+    //FETCH MARK OF A STUDENT FOR A GIVEN COURSE
+    @Override
     public StudentCourseMarksDTO getStudentCourseMarks(int studentId, int courseId) {
     	
     	   
@@ -163,6 +170,7 @@ public class MarksService {
     }
 
     // GET THE TOTAL MARK OF ALL REGISTERED COURSES FOR A STUDENT 
+    @Override
     public int getTotalMarks(int studentId){
         List<Marks> marksList = marksRepository.findAllByStudentStudId(studentId);
         int totalMarks = 0 ;
@@ -175,6 +183,7 @@ public class MarksService {
     
     
     // GET THE PERCENTAGE OF TOTAL MARK OF ALL REGISTERED COURSES FOR A STUDENT 
+    @Override
     public double getPercentage(int studentId){
     	List<Marks> marksList = marksRepository.findAllByStudentStudId(studentId);
         int totalMarks = 0,noOfSub=0 ;
@@ -187,13 +196,14 @@ public class MarksService {
     }
     
     //GET NO OF STUDENTS COURSEWISE
-        public int getStudentNumber(int id) {
+    @Override
+    public int getStudentNumber(int id) {
             int count = marksRepository.countByCourse(id); 
             if(count == 0) {
                 throw new RuntimeException("No student registered for this course");
             }
             return count;
-        }
+    }
         
 }
  	  
