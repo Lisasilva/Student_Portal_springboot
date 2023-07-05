@@ -59,6 +59,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- added this dependency for  Apache POI dependencies to read Excel files. -->
+
+       <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.0.0</version>
+       </dependency>
 	</dependencies>
 
 	<build>

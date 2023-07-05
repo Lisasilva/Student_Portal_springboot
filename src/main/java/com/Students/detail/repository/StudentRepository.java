@@ -8,11 +8,14 @@ import com.Students.detail.entity.Student;
 
 public interface StudentRepository extends JpaRepository<Student, Integer> {
     boolean existsByName(String name); //custom function
-    
+
     
     //this query is being used in MarksService.java to check if student_id - course_id combo exists in student_courses table
     @Query(value = "SELECT COUNT(*) FROM student_courses WHERE student_id = ?1 AND course_id = ?2", nativeQuery = true)
     int countByStudentAndCourse(int studentId, int courseId);
+    
+    Student findByName(String name); //this is required for uploading excel files
+
 }
 
 
