@@ -1,18 +1,29 @@
 package com.Students.detail.service;
 
-import java.util.*;
+import com.Students.detail.entity.Department;
+import com.Students.detail.entity.Student;
+import com.Students.detail.repository.DepartmentRepository;
+import com.Students.detail.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.Students.detail.repository.StudentRepository;
-import com.Students.detail.entity.Student;
+//import com.Students.detail.service.DepartmentService;
+
+
+import java.util.List;
+import java.util.Optional;
+//import java.util.ArrayList;
 
 @Service
-public class StudentService implements BaseService<Student>{
-	
-	@Autowired         //implicit dependency obj
-	StudentRepository studRepository;  //provides methods to interact with the DB using JPA ig
-	
-	@Override
+public class StudentService implements BaseService<Student> {
+
+    @Autowired     //implicit dependency obj
+    private StudentRepository studRepository;    //provides methods to interact with the DB using JPA ig
+
+    @Autowired
+    private DepartmentRepository deptRepository; //provides methods to interact with the DB using JPA
+    
+    
+    @Override
 	public List<Student> getAll(){    //GET
 		List<Student> students = studRepository.findAll(); //findAll() fn exists by default
 		if(students.isEmpty()) {
@@ -22,41 +33,78 @@ public class StudentService implements BaseService<Student>{
 	}
 	
 
-	@Override
-	public Student add(Student stud) {    //POST
-	    if(studRepository.existsByName(stud.getName())){   //existsByName() doesn't exist by default in the JPA connection made in StudentRepository, hence we define it in Student repository
-			throw new RuntimeException("Duplicate record");//if record with same name is entered twice
-		}
-		return studRepository.save(stud);   //save() is also predefined
-	}
-	
-	  
+    
+//    @Override
+//    public Student add(Student stud) {
+//        // Get the department from student and check if the department exists in the DepartmentRepository
+//        Department department = stud.getDepartment();
+//        boolean departmentExists = deptRepository.existsById(department.getDeptId());
+//
+//        // Check if a student with the same email already exists
+//        boolean duplicateEmailExists = studRepository.existsByEmail(stud.getEmail());
+//
+//        if(duplicateEmailExists || !departmentExists){   
+//            throw new RuntimeException("Either duplicate record or department not found"); 
+//        }
+//
+//        return studRepository.save(stud);   
+//    }
+
+    
     @Override
-	public Student edit(Student stud) {    //PUT
-		if (studRepository.existsById(stud.getStudId())) {
-			return studRepository.save(stud);
-		} 
-		
-		else {
-			throw new RuntimeException("Student not found"); //to check if the ID entered for modification exists or not
-		}
-	}
+    public Student add(Student stud) {
+        Long deptId = stud.getDepartment().getDeptId(); //to retrieve the department from student
+
+        // Check if the department exists in the DepartmentRepository
+        if(!deptRepository.existsById(deptId)) {
+            throw new RuntimeException("Department not found");
+        }
+
+        if(studRepository.existsByEmail(stud.getEmail())){   
+            throw new RuntimeException("Duplicate email"); 
+        }
+
+        Department department = deptRepository.findById(deptId).orElse(null);// Fetches department with given deptId
+        if(department == null){
+            throw new RuntimeException("Department not found"); 
+        }
+
+        stud.setDepartment(department);  // Sets retrieved department to the student
+        return studRepository.save(stud);   
+    }
 
 
-	@Override
-	public String delete(int studNo) {
-		if(!studRepository.existsById(studNo)){        // to check if the ID entered doesnt exist
-			throw new RuntimeException("Record doesn't exist");
-		}
-		studRepository.deleteById(studNo);
-		return "Deleted";
-	}
-	
-	@Override
-	public Student getById(int studNo) {
-		if(!studRepository.existsById(studNo)){        // to check if the ID enetered doesnt exist
-			throw new RuntimeException("Record doesn't exist");
-		}
-		return studRepository.findById(studNo).orElse(null);  //used optional datatype
-	}
+
+
+
+    @Override
+  	public Student edit(Student stud) {    //PUT
+  		if (studRepository.existsById(stud.getId())) {
+  			return studRepository.save(stud);
+  		} 
+  		
+  		else {
+  			throw new RuntimeException("Student not found"); //to check if the ID entered for modification exists or not
+  		}
+  	}    
+
+    @Override
+    public String delete(Long Id) {
+        if (!studRepository.existsById(Id)) {      // to check if the ID entered doesnt exist
+            throw new RuntimeException("Record doesn't exist");
+        }
+        studRepository.deleteById(Id);
+        return "Deleted";
+    }
+
+    @Override
+    public Student getById(Long Id) {
+        if (!studRepository.existsById(Id)) {    // to check if the ID enetered doesnt exist
+            throw new RuntimeException("Record doesn't exist"); 
+        }
+        return studRepository.findById(Id).orElse(null);  //used optional datatype
+    }
 }
+
+
+

@@ -10,33 +10,65 @@ import java.util.List;
 @RequestMapping("/stud")
 public class StudentController {
 
-	@Autowired
-	StudentService studService;
-	
-	@GetMapping("get/all")
-	public List<Student> getAll(){
-		return studService.getAll();
-	}
+    private final StudentService studService;
 
-	@PostMapping("/add")
-	public Student add(@RequestBody Student stud){
-		return studService.add(stud);
-	}
-	
+    @Autowired
+    public StudentController(StudentService studService) {
+        this.studService = studService;
+    }
+
+    @GetMapping("/get/all")
+    public List<Student> getAll(){
+        return studService.getAll();
+    }
+
+    @PostMapping("/add")
+    public Student add(@RequestBody Student stud){
+        return studService.add(stud);
+    }
 	@PutMapping("/edit")
 	public Student edit(@RequestBody Student stud){
 		return studService.edit(stud);
 	}
 	
 	@DeleteMapping("/delete")
-	public String delete(@RequestParam int studNo){
-		return studService.delete(studNo);
+	public String delete(@RequestParam Long Id){
+		return studService.delete(Id);
 	}
 	
 	@GetMapping("/student")
-	public Student getById(@RequestParam int studNo){
-	    return studService.getById(studNo);
+	public Student getById(@RequestParam Long Id){
+	    return studService.getById(Id);
 	}
 
 	
 }
+
+
+
+
+
+
+
+
+/*
+  
+ the next three crud operations using pathvariable instead of using one parameter
+
+
+    @PutMapping("/edit/{studId}")
+public Student edit(@PathVariable Long studId, @RequestBody Student stud){
+    return studService.edit(studId, stud);
+}
+
+@DeleteMapping("/delete/{studId}")
+public void delete(@PathVariable Long studId){
+    studService.delete(studId);
+}
+
+@GetMapping("/student/{studId}")
+public Student getById(@PathVariable Long studId){
+    return studService.getById(studId);
+}*/
+
+

@@ -6,7 +6,7 @@ public interface BaseService<T> {
 	 List<T> getAll();
 	 T add(T data);
 	 T edit(T data);
-	 String delete(int id);
-	 T getById(int id);
+	 String delete(Long id);
+	 T getById(Long id);
 	 
 }
