@@ -2,10 +2,14 @@ package com.Students.detail.service;
 
 import com.Students.detail.entity.Department;
 import com.Students.detail.repository.DepartmentRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartmentService implements BaseService<Department>{
@@ -13,6 +17,19 @@ public class DepartmentService implements BaseService<Department>{
     @Autowired     //implicit dependency obj
     private DepartmentRepository deptRepository; //provides methods to interact with the DB using JPA ig
 
+    
+    
+    @Transactional
+    public Department createDepartment(Department department) {
+        Department existingDepartment = deptRepository.findByDeptName(department.getDeptName());
+        if (existingDepartment != null) {
+            throw new RuntimeException("Department already exists");
+        } else {
+            return deptRepository.save(department);
+        }
+    }
+
+    
     @Override
     public List<Department> getAll() {	//GET
         List<Department> departments = deptRepository.findAll(); //findAll() fn exists by default
@@ -54,14 +71,17 @@ public class DepartmentService implements BaseService<Department>{
  
     
     
-   @Override
-   public Department getById(Long Id) {
-       if (!deptRepository.existsById(Id)) {    // to check if the ID enetered doesnt exist
-           throw new RuntimeException("Department Record doesn't exist"); 
-       }
-       return deptRepository.findById(Id).orElse(null);  //used optional datatype
-   }
-   
+    @Override
+    public Department getById(Long Id) {
+        if (!deptRepository.existsByDeptId(Id)) {    
+            throw new RuntimeException("Department Record doesn't exist"); 
+        }
+        Department department = deptRepository.findDepartmentByDeptId(Id); 
+        if(department == null) {
+            throw new RuntimeException("Department Record is null");
+        }
+        return department;
+    }
 }
 
 

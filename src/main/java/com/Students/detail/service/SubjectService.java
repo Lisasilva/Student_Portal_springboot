@@ -1,7 +1,13 @@
 package com.Students.detail.service;
 
+import com.Students.detail.entity.Department;
+import com.Students.detail.entity.StudentSubject;
 import com.Students.detail.entity.Subject;
+import com.Students.detail.repository.DepartmentRepository;
 import com.Students.detail.repository.SubjectRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -9,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class SubjectService implements BaseService<Subject>{
@@ -16,6 +23,21 @@ public class SubjectService implements BaseService<Subject>{
     @Autowired
     private SubjectRepository subRepository;
 
+    @Autowired
+    private DepartmentRepository deptRepository; //provides methods to interact with the DB using JPA
+    
+    
+    
+    @Transactional
+    public Subject createSubject(Subject subject) {
+        Department existingDepartment = deptRepository.findDepartmentByDeptId(subject.getDepartment().getDeptId());
+        if (existingDepartment == null) {
+            throw new RuntimeException("Department does not exist");
+        } else {
+            return subRepository.save(subject);
+        }
+    }
+    
     @Override
     public List<Subject> getAll() {
         List<Subject> subjects = subRepository.findAll();//findAll() fn exists by default
@@ -70,5 +92,12 @@ public class SubjectService implements BaseService<Subject>{
   	}    
     
     
+    
+    
+    public Set<StudentSubject> getSubjectStudents(Long subjectId) {
+        Subject subject = subRepository.findById(subjectId).orElseThrow(/* exception */);
+        return subject.getStudentSubjects();
+    }
+
     
 }

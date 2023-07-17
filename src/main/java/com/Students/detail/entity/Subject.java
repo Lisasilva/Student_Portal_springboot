@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.data.relational.core.mapping.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,25 +29,25 @@ public class Subject {
     @Column(name = "SUB_ID")
     private Long subId;
     
-    @Column(name = "SUB_NAME")
+    @Column(name = "SUB_NAME", nullable = false)
     private String subName;
 
-    @Column(name = "TOT_MARKS")
+    @Column(name = "TOT_MARKS", nullable = false)
     private int totMarks;
 
-    @Column(name = "MARKS_OBTAINED")
-    private int marksObtained;
-
-    @Column(name = "SEM")
+    @Column(name = "SEM", nullable = false)
     private int sem;
 
-    @JsonBackReference
+    //@JsonBackReference
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "deptId", nullable = false)
     private Department department;
 
-    
-    
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<StudentSubject> studentSubjects = new HashSet<>();
+
     
     //Getters and Setters
 	public Long getSubId() {
@@ -72,13 +74,13 @@ public class Subject {
 		this.totMarks = totMarks;
 	}
 
-	public int getMarksObtained() {
-		return marksObtained;
-	}
-
-	public void setMarksObtained(int marksObtained) {
-		this.marksObtained = marksObtained;
-	}
+//	public int getMarksObtained() {
+//		return marksObtained;
+//	}
+//
+//	public void setMarksObtained(int marksObtained) {
+//		this.marksObtained = marksObtained;
+//	}
 
 	public int getSem() {
 		return sem;
@@ -97,6 +99,16 @@ public class Subject {
 	}
     
     
+	
+	//modified
+	
+	 public Set<StudentSubject> getStudentSubjects() {
+	        return studentSubjects;
+	    }
+
+	    public void setStudentSubjects(Set<StudentSubject> studentSubjects) {
+	        this.studentSubjects = studentSubjects;
+	    }
     
     
 }

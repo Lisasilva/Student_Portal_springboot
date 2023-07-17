@@ -4,8 +4,10 @@ import com.Students.detail.entity.Subject;
 import com.Students.detail.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import com.Students.detail.service.StudentSubjectService;
+import com.Students.detail.entity.StudentSubject;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/sub")
@@ -45,5 +47,14 @@ public class SubjectController {
     @DeleteMapping("/delete")
     public void deleteSubject(@RequestParam("subjectId") Long id) {
         subjectService.delete(id);
+    }
+    
+    
+    
+    //extra addition
+    
+    @GetMapping("/{subjectId}/students")
+    public Set<StudentSubject> getSubjectStudents(@PathVariable Long subjectId) {
+        return subjectService.getSubjectStudents(subjectId);
     }
 }

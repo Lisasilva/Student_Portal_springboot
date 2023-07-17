@@ -19,6 +19,61 @@ public class ExcelController {
         this.excelService = excelService;
     }
 
+      
+    
+    @PostMapping("/student")
+    public ResponseEntity<String> uploadFileStudent(@RequestParam("file") MultipartFile file) {
+        try {
+            excelService.save(file,"student");
+            return new ResponseEntity<>("The Student excel file has been uploaded and processed successfully.", HttpStatus.OK);
+        } 
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @PostMapping("/department")
+    public ResponseEntity<String> uploadFileDepartment(@RequestParam("file") MultipartFile file) {
+        try {
+            excelService.save(file,"department");
+            return new ResponseEntity<>("The department excel file has been uploaded and processed successfully.", HttpStatus.OK);
+        } 
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    } 
+    
+    @PostMapping("/subject")
+    public ResponseEntity<String> uploadFileSubject(@RequestParam("file") MultipartFile file) {
+        try {
+            excelService.save(file,"subject");
+            return new ResponseEntity<>("The subject excel file has been uploaded and processed successfully.", HttpStatus.OK);
+        } 
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @PostMapping("/student_subject")
+    public ResponseEntity<String> uploadFileStudentSubject(@RequestParam("file") MultipartFile file) {
+        try {
+            excelService.save(file,"student_subject");
+            return new ResponseEntity<>("The student_subject excel file has been uploaded and processed successfully.", HttpStatus.OK);
+        } 
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    
+    
+    //need to add for studentsubject aswell
+    
+}   
+    
+    
+    /*
+    
     @PostMapping("/student")
     public ResponseEntity<String> uploadFileStudent(@RequestParam("file") MultipartFile file) {
         try {
@@ -48,4 +103,5 @@ public class ExcelController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-}
+    */
+

@@ -2,8 +2,12 @@ package com.Students.detail.service;
 
 import com.Students.detail.entity.Department;
 import com.Students.detail.entity.Student;
+import com.Students.detail.entity.StudentSubject;
 import com.Students.detail.repository.DepartmentRepository;
 import com.Students.detail.repository.StudentRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 //import com.Students.detail.service.DepartmentService;
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 //import java.util.ArrayList;
+import java.util.Set;
 
 @Service
 public class StudentService implements BaseService<Student> {
@@ -22,6 +27,17 @@ public class StudentService implements BaseService<Student> {
     @Autowired
     private DepartmentRepository deptRepository; //provides methods to interact with the DB using JPA
     
+    
+    
+    @Transactional
+    public Student createStudent(Student student) {
+        Department existingDepartment = deptRepository.findDepartmentByDeptId(student.getDepartment().getDeptId());
+        if (existingDepartment == null) {
+            throw new RuntimeException("Department does not exist");
+        } else {
+            return studRepository.save(student);
+        }
+    }
     
     @Override
 	public List<Student> getAll(){    //GET
@@ -64,10 +80,12 @@ public class StudentService implements BaseService<Student> {
             throw new RuntimeException("Duplicate email"); 
         }
 
-        Department department = deptRepository.findById(deptId).orElse(null);// Fetches department with given deptId
+
+        Department department = deptRepository.findDepartmentByDeptId(deptId);
         if(department == null){
             throw new RuntimeException("Department not found"); 
         }
+
 
         stud.setDepartment(department);  // Sets retrieved department to the student
         return studRepository.save(stud);   
@@ -104,6 +122,13 @@ public class StudentService implements BaseService<Student> {
         }
         return studRepository.findById(Id).orElse(null);  //used optional datatype
     }
+    
+    
+    public Set<StudentSubject> getStudentSubjects(Long studentId) {
+        Student student = studRepository.findById(studentId).orElseThrow(/* exception */);
+        return student.getStudentSubjects();
+    }
+
 }
 
 

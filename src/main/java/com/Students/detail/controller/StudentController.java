@@ -3,8 +3,10 @@ package com.Students.detail.controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.Students.detail.entity.Student;
+import com.Students.detail.entity.StudentSubject;
 import com.Students.detail.service.StudentService;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/stud")
@@ -41,6 +43,15 @@ public class StudentController {
 	    return studService.getById(Id);
 	}
 
+	
+	
+	
+	
+	//extra calculations
+	@GetMapping("/{studentId}/subjects")
+	public Set<StudentSubject> getStudentSubjects(@PathVariable Long studentId) {
+	    return studService.getStudentSubjects(studentId);
+	}
 	
 }
 

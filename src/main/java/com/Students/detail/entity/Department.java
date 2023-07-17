@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.data.relational.core.mapping.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 //import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,14 +28,16 @@ public class Department {
     @Column(name = "DEPT_ID")
 	private Long deptId;
     
-    @Column(name = "DEPT_NAME")
+    @Column(name = "DEPT_NAME", nullable = false)
     private String deptName;
     
-    @JsonManagedReference
+    //@JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private Set<Student> students; //when i import the excel records, this will be null right?
     
-    @JsonManagedReference
+    //@JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private Set<Subject> subjects;
 
