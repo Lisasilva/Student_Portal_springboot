@@ -63,45 +63,7 @@ public class ExcelController {
         catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-    
-    
-    
-    //need to add for studentsubject aswell
-    
+    }   
 }   
     
-    
-    /*
-    
-    @PostMapping("/student")
-    public ResponseEntity<String> uploadFileStudent(@RequestParam("file") MultipartFile file) {
-        try {
-            excelService.save(file,"student");
-            return new ResponseEntity<>("The Student excel file has been uploaded and processed successfully.", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    @PostMapping("/department")
-    public ResponseEntity<String> uploadFileCourse(@RequestParam("file") MultipartFile file) {
-        try {
-            excelService.save(file,"department");
-            return new ResponseEntity<>("The Department Excel file has been uploaded and processed successfully.", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    @PostMapping("/subject")
-    public ResponseEntity<String> uploadFileMarks(@RequestParam("file") MultipartFile file) {
-        try {
-            excelService.save(file,"subject");
-            return new ResponseEntity<>("The Student Excel file has been uploaded and processed successfully.", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    */
-
+  

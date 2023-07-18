@@ -68,4 +68,9 @@ public class StudentSubject {
     
     
     
+	//extra method
+	
+	 public int getSemester() {
+	        return this.subject.getSem();
+	 }
 }

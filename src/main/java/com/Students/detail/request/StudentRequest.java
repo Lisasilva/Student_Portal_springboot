@@ -37,12 +37,7 @@ public class StudentRequest {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-//	public String getFeeStatus() {
-//		return feeStatus;
-//	}
-//	public void setFeeStatus(String feeStatus) {
-//		this.feeStatus = feeStatus;
-//	}
+
 	public Long getDepartmentId() {
 		return departmentId;
 	}
@@ -51,3 +46,11 @@ public class StudentRequest {
 	}
 	
 }
+
+
+//public String getFeeStatus() {
+//return feeStatus;
+//}
+//public void setFeeStatus(String feeStatus) {
+//this.feeStatus = feeStatus;
+//}

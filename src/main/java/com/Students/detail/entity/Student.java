@@ -109,5 +109,12 @@ public class Student {
     public void setStudentSubjects(Set<StudentSubject> studentSubjects) {
         this.studentSubjects = studentSubjects;
     }
+    
+    
+    
+    public Subject getSubjectByName(String subjectName) {
+        return studentSubjects.stream().filter(studentSubject -> studentSubject.getSubject().getSubName().equals(subjectName)).map(StudentSubject::getSubject).findFirst().orElse(null);
+    }
+
 	
 }
