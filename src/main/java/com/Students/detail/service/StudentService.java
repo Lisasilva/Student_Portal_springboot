@@ -65,26 +65,7 @@ public class StudentService implements BaseService<Student> {
 		}
 		return students;
 	}
-	
-
-    
-//    @Override
-//    public Student add(Student stud) {
-//        // Get the department from student and check if the department exists in the DepartmentRepository
-//        Department department = stud.getDepartment();
-//        boolean departmentExists = deptRepository.existsById(department.getDeptId());
-//
-//        // Check if a student with the same email already exists
-//        boolean duplicateEmailExists = studRepository.existsByEmail(stud.getEmail());
-//
-//        if(duplicateEmailExists || !departmentExists){   
-//            throw new RuntimeException("Either duplicate record or department not found"); 
-//        }
-//
-//        return studRepository.save(stud);   
-//    }
-
-    
+   
     @Override
     public Student add(Student stud) {
         Long deptId = stud.getDepartment().getDeptId(); //to retrieve the department from student
@@ -149,83 +130,6 @@ public class StudentService implements BaseService<Student> {
 
     
     
-    //modificationsssss
-    
-//    public StudentDto getStudentDetails(Long studentId) {
-//        Student student = studRepository.findById(studentId).orElseThrow(() -> new NotFoundException("Student not found"));
-//        Department department = deptRepository.findById(student.getDepartmentId()).orElseThrow(() -> new NotFoundException("Department not found"));
-//        Set<Subject> subjects = subRepository.findAllByDepartmentId(department.getId());
-//        Map<String, Integer> marks = marksRepository.findAllByStudentId(studentId);
-//        Double percentage = calculatePercentage(marks); 
-//        return new StudentDto(student, department, subjects, marks, percentage);
-//    }
-    
-    
-//    public StudentDTO getStudentById(Long id) {
-//        Student student = studentRepository.findById(id)
-//            .orElseThrow(() -> new ResourceNotFoundException("Student", "id", id));
-//        return convertToDTO(student);
-//    }
-//
-//    
-//    private studDto convertToDTO(Student student) {
-//        StudentDTO studentDTO = new StudentDTO();
-//        studentDTO.setId(student.getId());
-//        studentDTO.setName(student.getName());
-//        studentDTO.setAddress(student.getAddress());
-//        studentDTO.setEmail(student.getEmail());
-//        studentDTO.setDeptId(student.getDepartment().getDeptId());
-//        studentDTO.setDeptName(student.getDepartment().getDeptName());
-//        // convert subjects and calculate the overall percentage
-//        List<StudentDTO.SubjectDTO> subjectDTOS = new ArrayList<>();
-//        double overallMarks = 0;
-//        double overallTotMarks = 0;
-//        for (Subject subject : student.getSubjects()) {
-//            StudentDTO.SubjectDTO subjectDTO = new StudentDTO.SubjectDTO();
-//            subjectDTO.setSubId(subject.getDeptId());
-//            subjectDTO.setSubName(subject.getDeptName());
-//            subjectDTO.setTotMarks(subject.getTotalMarks());
-//            subjectDTO.setSem(subject.getSemester());
-//            subjectDTO.setPercentage((double) subject.getMarksObtained() / subject.getTotalMarks() * 100);
-//            overallMarks += subject.getMarksObtained();
-//            overallTotMarks += subject.getTotalMarks();
-//            subjectDTOS.add(subjectDTO);
-//        }
-//        studentDTO.setSubjects(subjectDTOS);
-//        studentDTO.setOverallPercentage(overallMarks / overallTotMarks * 100);
-//        return studentDTO;
-//    }
-    
-    
-    
-    
-//    public Student getStudentWithDetails(Long studentId) {
-//        Student student = null;
-//        if (studRepository.findById(studentId).isPresent()) {
-//            student = studRepository.findById(studentId).get();
-//        } 
-//        else {
-//            throw new RuntimeException("Student not found"); 
-//        }
-//
-//        Hibernate.initialize(student.getStudentSubjects()); // Initializing my  StudentSubject collection
-//        Hibernate.initialize(student.getDepartment()); // Initializing the  Department
-//        return student;
-//    }
-  
-//   
-//        List<StudentSubject> studentSubjects = studSubRepository.findByStudent(student);
-//        
-//        StudentDto studDto = new StudentDto();
-//        studDto.setStudent(student);
-//        studDto.setDepartment(student.getDepartment());
-//        studDto.setSubjects(studentSubjects.stream().map(StudentSubject::getSubject).collect(Collectors.toList()));
-//        //studDto.setMarks(studentSubjects.stream().collect(Collectors.toMap(StudentSubject::getSubject,StudentSubject::getMarksObtained)));
-//        studDto.setMarks(studentSubjects.stream().collect(Collectors.toMap(StudentSubject::getSubject, studentSubject -> (double) studentSubject.getMarksObtained())));
-//
-//        return studDto;
-//    }   
-    
     public StudentDto getStudentDetails(Long studentId) {
         Student student = studRepository.findById(studentId).orElseThrow(() -> new RuntimeException("Student not found"));
 
@@ -270,43 +174,149 @@ public class StudentService implements BaseService<Student> {
         return studentDto;
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//    public Map<Integer, StudentDto> getStudentDetailsBySemester(Long studentId) {
-//        Student student = studRepository.findById(studentId)
-//            .orElseThrow(() -> new RuntimeException("Student not found"));
-//
-//        Map<Integer, List<StudentSubject>> subjectsBySemester = studSubRepository.findByStudent(student).stream().collect(Collectors.groupingBy(StudentSubject::getSemester));
-//
-//        Map<Integer, StudentDto> detailsBySemester = new HashMap<>();
-//        for (Map.Entry<Integer, List<StudentSubject>> entry : subjectsBySemester.entrySet()) {
-//            StudentDto stuDto = new StudentDto();
-//            stuDto.setStudent(student);
-//            stuDto.setDepartment(student.getDepartment());
-//            stuDto.setSubjects(entry.getValue().stream().map(StudentSubject::getSubject).collect(Collectors.toList()));
-//            //stuDto.setMarks(entry.getValue().stream().collect(Collectors.toMap(StudentSubject::getSubject,StudentSubject::getMarksObtained)));
-//            stuDto.setMarks(entry.getValue().stream().collect(Collectors.toMap(StudentSubject::getSubject, studentSubject -> (double) studentSubject.getMarksObtained())));
-//
-//            
-//            
-//            detailsBySemester.put(entry.getKey(), stuDto);
-//        }
-//        return detailsBySemester;
-//    }
-
-
-    
 }
     
     
 
 
 
+
+
+
+
+
+
+
+
+
+//@Override
+//public Student add(Student stud) {
+//  // Get the department from student and check if the department exists in the DepartmentRepository
+//  Department department = stud.getDepartment();
+//  boolean departmentExists = deptRepository.existsById(department.getDeptId());
+//
+//  // Check if a student with the same email already exists
+//  boolean duplicateEmailExists = studRepository.existsByEmail(stud.getEmail());
+//
+//  if(duplicateEmailExists || !departmentExists){   
+//      throw new RuntimeException("Either duplicate record or department not found"); 
+//  }
+//
+//  return studRepository.save(stud);   
+//}
+
+//modificationsssss
+
+//public StudentDto getStudentDetails(Long studentId) {
+//    Student student = studRepository.findById(studentId).orElseThrow(() -> new NotFoundException("Student not found"));
+//    Department department = deptRepository.findById(student.getDepartmentId()).orElseThrow(() -> new NotFoundException("Department not found"));
+//    Set<Subject> subjects = subRepository.findAllByDepartmentId(department.getId());
+//    Map<String, Integer> marks = marksRepository.findAllByStudentId(studentId);
+//    Double percentage = calculatePercentage(marks); 
+//    return new StudentDto(student, department, subjects, marks, percentage);
+//}
+
+
+//public StudentDTO getStudentById(Long id) {
+//    Student student = studentRepository.findById(id)
+//        .orElseThrow(() -> new ResourceNotFoundException("Student", "id", id));
+//    return convertToDTO(student);
+//}
+//
+//
+//private studDto convertToDTO(Student student) {
+//    StudentDTO studentDTO = new StudentDTO();
+//    studentDTO.setId(student.getId());
+//    studentDTO.setName(student.getName());
+//    studentDTO.setAddress(student.getAddress());
+//    studentDTO.setEmail(student.getEmail());
+//    studentDTO.setDeptId(student.getDepartment().getDeptId());
+//    studentDTO.setDeptName(student.getDepartment().getDeptName());
+//    // convert subjects and calculate the overall percentage
+//    List<StudentDTO.SubjectDTO> subjectDTOS = new ArrayList<>();
+//    double overallMarks = 0;
+//    double overallTotMarks = 0;
+//    for (Subject subject : student.getSubjects()) {
+//        StudentDTO.SubjectDTO subjectDTO = new StudentDTO.SubjectDTO();
+//        subjectDTO.setSubId(subject.getDeptId());
+//        subjectDTO.setSubName(subject.getDeptName());
+//        subjectDTO.setTotMarks(subject.getTotalMarks());
+//        subjectDTO.setSem(subject.getSemester());
+//        subjectDTO.setPercentage((double) subject.getMarksObtained() / subject.getTotalMarks() * 100);
+//        overallMarks += subject.getMarksObtained();
+//        overallTotMarks += subject.getTotalMarks();
+//        subjectDTOS.add(subjectDTO);
+//    }
+//    studentDTO.setSubjects(subjectDTOS);
+//    studentDTO.setOverallPercentage(overallMarks / overallTotMarks * 100);
+//    return studentDTO;
+//}
+
+
+
+
+//public Student getStudentWithDetails(Long studentId) {
+//    Student student = null;
+//    if (studRepository.findById(studentId).isPresent()) {
+//        student = studRepository.findById(studentId).get();
+//    } 
+//    else {
+//        throw new RuntimeException("Student not found"); 
+//    }
+//
+//    Hibernate.initialize(student.getStudentSubjects()); // Initializing my  StudentSubject collection
+//    Hibernate.initialize(student.getDepartment()); // Initializing the  Department
+//    return student;
+//}
+
+//
+//    List<StudentSubject> studentSubjects = studSubRepository.findByStudent(student);
+//    
+//    StudentDto studDto = new StudentDto();
+//    studDto.setStudent(student);
+//    studDto.setDepartment(student.getDepartment());
+//    studDto.setSubjects(studentSubjects.stream().map(StudentSubject::getSubject).collect(Collectors.toList()));
+//    //studDto.setMarks(studentSubjects.stream().collect(Collectors.toMap(StudentSubject::getSubject,StudentSubject::getMarksObtained)));
+//    studDto.setMarks(studentSubjects.stream().collect(Collectors.toMap(StudentSubject::getSubject, studentSubject -> (double) studentSubject.getMarksObtained())));
+//
+//    return studDto;
+//} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//public Map<Integer, StudentDto> getStudentDetailsBySemester(Long studentId) {
+//  Student student = studRepository.findById(studentId)
+//      .orElseThrow(() -> new RuntimeException("Student not found"));
+//
+//  Map<Integer, List<StudentSubject>> subjectsBySemester = studSubRepository.findByStudent(student).stream().collect(Collectors.groupingBy(StudentSubject::getSemester));
+//
+//  Map<Integer, StudentDto> detailsBySemester = new HashMap<>();
+//  for (Map.Entry<Integer, List<StudentSubject>> entry : subjectsBySemester.entrySet()) {
+//      StudentDto stuDto = new StudentDto();
+//      stuDto.setStudent(student);
+//      stuDto.setDepartment(student.getDepartment());
+//      stuDto.setSubjects(entry.getValue().stream().map(StudentSubject::getSubject).collect(Collectors.toList()));
+//      //stuDto.setMarks(entry.getValue().stream().collect(Collectors.toMap(StudentSubject::getSubject,StudentSubject::getMarksObtained)));
+//      stuDto.setMarks(entry.getValue().stream().collect(Collectors.toMap(StudentSubject::getSubject, studentSubject -> (double) studentSubject.getMarksObtained())));
+//
+//      
+//      
+//      detailsBySemester.put(entry.getKey(), stuDto);
+//  }
+//  return detailsBySemester;
+//}
 

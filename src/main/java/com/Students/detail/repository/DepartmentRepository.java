@@ -1,5 +1,6 @@
 package com.Students.detail.repository;
 
+
 import java.util.Optional;
 
 import org.springframework.data.jdbc.repository.query.Query;
@@ -15,6 +16,10 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
     boolean existsByDeptId(Long deptId); 
     Department findByDeptName(String deptName);
 
+    //Department findByName(String dname);
+
+
+    
     @Query("SELECT d FROM Department d WHERE d.deptId = :deptId")
     Department findDepartmentByDeptId(@Param("deptId") Long deptId);
 }

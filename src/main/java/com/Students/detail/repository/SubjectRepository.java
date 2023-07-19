@@ -27,5 +27,5 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
 	
 	boolean existsBySubName(String name);  //custom function
 
-
+	Subject findBySubName(String subName);
 }

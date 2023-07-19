@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 //import org.springframework.data.jpa.repository.JpaRepository;
 import com.Students.detail.entity.Student;
-
+import com.Students.detail.entity.Student;
 //public interface StudentRepository extends JpaRepository<Student, Integer> {
 //    boolean existsByName(String name); //custom function
 //
@@ -26,6 +26,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     boolean existsByName(String name);  //custom function
     boolean existsByEmail(String email);
+    Student findByEmail(String email);
 
 
 
